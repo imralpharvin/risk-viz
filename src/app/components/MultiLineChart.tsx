@@ -54,7 +54,6 @@ const MultiLineChart = ({
       .attr('transform', `translate(${margin / 2}, ${margin / 2})`)
       .call(d3.axisLeft(yScale));
 
-    console.log(data);
     lineGraph
       .append('g')
       .selectAll('dot')
@@ -114,15 +113,15 @@ const MultiLineChart = ({
       })
       .curve(d3.curveMonotoneX);
 
-    svg
-      .append('path')
-      .datum(averageData)
-      .attr('class', 'line')
-      .attr('transform', `translate(${margin / 2}, ${margin / 2})`)
-      .attr('d', line)
-      .style('fill', 'none')
-      .style('stroke', '#CC0000')
-      .style('stroke-width', '2');
+    // svg
+    //   .append('path')
+    //   .datum(averageData)
+    //   .attr('class', 'line')
+    //   .attr('transform', `translate(${margin / 2}, ${margin / 2})`)
+    //   .attr('d', line)
+    //   .style('fill', 'none')
+    //   .style('stroke', '#CC0000')
+    //   .style('stroke-width', '2');
   }, [ratings]);
   return (
     <>

@@ -21,7 +21,7 @@ const CustomMarker = ({
   color: string;
   assetName: string;
   businessCategory: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: any;
 }) => {
   const svgIcon = L.divIcon({
     html: `
