@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-// import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { usePapaParse } from 'react-papaparse';
 import chroma from 'chroma-js';
 import { useSortableData } from '../hooks/useSortableData';
@@ -11,22 +10,17 @@ import {
   getAllUniqueValues,
   getPropertyNameByHeader,
   getRandom,
-  getRatingsByAssetName,
   getRatingsByFilters,
-  getRatingsByYear,
-  sortArrayByProperty,
 } from '../utils/utils';
 import Multiselect from 'multiselect-react-dropdown';
 import MultiLineChart from './MultiLineChart';
 import { UniqueValue } from '../types/UniqueValue';
-import { unique } from 'next/dist/build/utils';
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
-import markerIconPng from 'leaflet/dist/images/marker-icon.png';
-import L, { Icon } from 'leaflet';
+
 import CustomMarker from './CustomMarker';
-import MarkerClusterGroup from 'react-leaflet-cluster';
+
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import { CloseIcon } from './CloseIcon';
@@ -37,9 +31,6 @@ import { CloseIcon } from './CloseIcon';
 
 const ClimateRiskRatingMap = () => {
   /* ---------------------------------- Hooks --------------------------------- */
-  // const { isLoaded } = useLoadScript({
-  //   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
-  // });
 
   const [columns, setColumns] = useState<string[]>([]);
   const [ratings, setRatings] = useState<Rating[]>([]);

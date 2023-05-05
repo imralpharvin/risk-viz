@@ -1,14 +1,5 @@
-import {
-  MapContainer,
-  TileLayer,
-  useMap,
-  Marker,
-  Popup,
-  Tooltip,
-} from 'react-leaflet';
+import { Marker, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
-import { Rating } from '../types/Rating';
-import { useState } from 'react';
 
 const CustomMarker = ({
   position,
