@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+  --leaflet-tile-filter: brightness(0.6) invert(1) contrast(3)
+    hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+.map-container {
+  width: 80%;
+  height: 80vh;
+}
+
+.map-tiles {
+  filter: var(--leaflet-tile-filter, none);
+}
+
+.leaflet-container {
+  width: 100vw;
+  height: 100vh;
+  z-index: 0 !important;
+  background: #303030;
+}
+.leaflet-control {
+  z-index: 0 !important;
+}
+.leaflet-pane {
+  z-index: 0 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 0 !important;
+}
+
+.selectYear {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background-color: transparent;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.selectYearOption {
+  background-color: gray;
+  color: white;
+}
+
+table {
+  width: 100%;
+}
+
+.bottomPaneButton {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.leftPaneButton {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.rightPaneButton {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+body {
+  overflow: hidden;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.slide-pane_from_bottom {
+  height: 50vh !important;
+  margin-top: 50vh !important;
+}
