@@ -75,6 +75,7 @@ const ClimateRiskRatingMap = () => {
   const [isRightPaneOpen, setIsRightPaneOpen] = useState<boolean>(false);
   const { items: sortedRatings, requestSort } =
     useSortableData(filteredRatings);
+  const { readString } = usePapaParse();
 
   let riskRatingColor = chroma.scale(['red', 'yellow', 'green']);
 
@@ -82,7 +83,7 @@ const ClimateRiskRatingMap = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Parse csv file
-      const { readString } = usePapaParse();
+
       const res = await fetch('/assets/climateRiskRating.csv');
       const csvData = await res.text();
       readString(csvData, {
