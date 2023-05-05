@@ -248,7 +248,6 @@ const ClimateRiskRatingMap = () => {
               assetName={rating.assetName}
               businessCategory={rating.businessCategory}
               onClick={() => {
-                console.log('CLICKED');
                 setSelectedMarker(rating);
                 setIsRightPaneOpen(true);
               }}
@@ -419,10 +418,9 @@ const ClimateRiskRatingMap = () => {
                 [
                   {
                     category: selectedCategory as string,
-                    value:
-                      selectedMarker[
-                        getPropertyNameByHeader(selectedCategory) as string
-                      ],
+                    value: selectedMarker[
+                      getPropertyNameByHeader(selectedCategory) as keyof Rating
+                    ] as string,
                   },
                 ]
               )}
