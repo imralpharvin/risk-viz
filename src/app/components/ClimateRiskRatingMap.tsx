@@ -74,78 +74,81 @@ const ClimateRiskRatingMap = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Parse csv file
+      try {
+        const res = await fetch('/assets/climateRiskRating.csv');
+        const csvData = await res.text();
+        readString(csvData, {
+          worker: true,
+          complete: (results: any) => {
+            const resultsData = results.data;
 
-      const res = await fetch('/assets/climateRiskRating.csv');
-      const csvData = await res.text();
-      readString(csvData, {
-        worker: true,
-        complete: (results: any) => {
-          const resultsData = results.data;
+            // Set columns
+            const columns = resultsData.shift();
+            setColumns(columns);
 
-          // Set columns
-          const columns = resultsData.shift();
-          setColumns(columns);
+            // Set ratings
+            const ratings = resultsData.map((item: string[]) => {
+              const rating: Rating = {
+                assetName: item[0],
+                lat: Number(item[1]),
+                lng: Number(item[2]),
+                latOffset: getRandom(0.000001, 0.000099),
+                lngOffset: getRandom(0.000001, 0.000099),
+                businessCategory: item[3],
+                riskRating: Number(item[4]),
+                riskFactors: Object.entries(JSON.parse(item[5])) as [
+                  string,
+                  number
+                ][],
+                year: Number(item[6]),
+              };
 
-          // Set ratings
-          const ratings = resultsData.map((item: string[]) => {
-            const rating: Rating = {
-              assetName: item[0],
-              lat: Number(item[1]),
-              lng: Number(item[2]),
-              latOffset: getRandom(0.000001, 0.000099),
-              lngOffset: getRandom(0.000001, 0.000099),
-              businessCategory: item[3],
-              riskRating: Number(item[4]),
-              riskFactors: Object.entries(JSON.parse(item[5])) as [
-                string,
-                number
-              ][],
-              year: Number(item[6]),
-            };
+              return rating;
+            });
 
-            return rating;
-          });
+            setRatings(ratings);
 
-          setRatings(ratings);
+            const uniqueValues = getAllUniqueValues(ratings);
 
-          const uniqueValues = getAllUniqueValues(ratings);
+            setAllUniqueValues(uniqueValues);
 
-          setAllUniqueValues(uniqueValues);
+            const assetNames = uniqueValues
+              .filter((uniqueValue) => uniqueValue.category === 'Asset Name')
+              .sort(compareUniqueValues);
 
-          const assetNames = uniqueValues
-            .filter((uniqueValue) => uniqueValue.category === 'Asset Name')
-            .sort(compareUniqueValues);
+            const locations = uniqueValues
+              .filter((uniqueValue) => uniqueValue.category === 'Location')
+              .sort(compareUniqueValues);
 
-          const locations = uniqueValues
-            .filter((uniqueValue) => uniqueValue.category === 'Location')
-            .sort(compareUniqueValues);
+            const businessCategories = uniqueValues
+              .filter(
+                (uniqueValue) => uniqueValue.category === 'Business Category'
+              )
+              .sort(compareUniqueValues);
 
-          const businessCategories = uniqueValues
-            .filter(
-              (uniqueValue) => uniqueValue.category === 'Business Category'
-            )
-            .sort(compareUniqueValues);
+            const riskFactors = uniqueValues
+              .filter((uniqueValue) => uniqueValue.category === 'Risk Factor')
+              .sort(compareUniqueValues);
 
-          const riskFactors = uniqueValues
-            .filter((uniqueValue) => uniqueValue.category === 'Risk Factor')
-            .sort(compareUniqueValues);
+            const years = uniqueValues
+              .filter((uniqueValue) => uniqueValue.category === 'Year')
+              .sort(compareUniqueValues);
 
-          const years = uniqueValues
-            .filter((uniqueValue) => uniqueValue.category === 'Year')
-            .sort(compareUniqueValues);
+            setAssetNames(assetNames);
+            setLocations(locations);
+            setBusinessCategories(businessCategories);
+            setRiskFactors(riskFactors);
+            setYears(years);
 
-          setAssetNames(assetNames);
-          setLocations(locations);
-          setBusinessCategories(businessCategories);
-          setRiskFactors(riskFactors);
-          setYears(years);
+            const firstYear = years[0];
 
-          const firstYear = years[0];
-
-          setSelectedYear(firstYear);
-          setFilteredRatings(getRatingsByFilters([...ratings], [firstYear]));
-        },
-      });
+            setSelectedYear(firstYear);
+            setFilteredRatings(getRatingsByFilters([...ratings], [firstYear]));
+          },
+        });
+      } catch (e) {
+        console.error(e);
+      }
     };
     fetchData();
   }, []);
